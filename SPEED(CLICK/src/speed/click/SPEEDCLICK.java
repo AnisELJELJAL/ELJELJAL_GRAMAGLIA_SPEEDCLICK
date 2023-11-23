@@ -4,17 +4,28 @@
  */
 package speed.click;
 
+import java.util.Scanner;
+
 /**
  *
  * @author mathi
  */
+import java.util.Scanner;
+
 public class SPEEDCLICK {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Bienvenue dans le jeu SPEED-CLICK !");
+
+        // Instancier la classe JouerPartie
+        JouerPartie jeu = new JouerPartie(3, 3);
+
+        // Utiliser la méthode pour initialiser la partie
+        jeu.initialiserPartie();
+
+        // Utiliser la méthode pour jouer la partie
+        jeu.jouerPartie();
     }
-    
 }
+
