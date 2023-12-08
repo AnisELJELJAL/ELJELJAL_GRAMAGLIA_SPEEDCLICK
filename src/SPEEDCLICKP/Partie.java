@@ -13,62 +13,67 @@ import java.util.Scanner;
  * @author anis_
  */
 public class Partie {
-      public void startGame() {
-        initializeGame();
-        startGameTimer();
-        playGame();
-    }
-      private void initializeGame() {
-        buttons = new boolean[grille_taille][grille_taille];
-        score = 0;
-        timeRemaining = GAME_TEMPS;
-        updateButtonState();
-    }
-       private void updateGame() {
-        if (timeRemaining > 0) {
-            timeRemaining--;
+    private Grille grille;
+    private Chronometre chronometre;
+    private boolean enCours;
 
-            if (timeRemaining == 0) {
-                endGame();
-            } else {
-                updateButtonState();
-            }
+    public Partie(int nbLignes, int nbColonnes, int dureePartieMillis) {
+        grille = new Grille(nbLignes, nbColonnes);
+        chronometre = new Chronometre();
+        chronometre.setDuree(dureePartieMillis);
+        enCours = false;
+    }
+
+    public void demarrerPartie() {
+        if (!enCours) {
+            grille.eteindreTousLesBoutons();
+            grille.allumerBoutonAleatoire();
+            chronometre.lancerChrono();
+            enCours = true;
+            System.out.println("Partie démarrée. Cliquez sur le bouton allumé !");
+            afficherGrille();
+        } else {
+            System.out.println("La partie est déjà en cours !");
         }
     }
-           private void playGame() {
-        Scanner scanner = new Scanner(System.in);
 
-        while (timeRemaining > 0) {
-            System.out.print("Entrer LIGNE ET COLONNE : ");
-            int row = scanner.nextInt() - 1;
-            int col = scanner.nextInt() - 1;
-
-            if (isValidInput(row, col) && buttons[row][col]) {
-                score++;
-                updateButtonState();
-            } else {
-                System.out.println("Wrong button! Try again.");
-            }
+    public void arreterPartie() {
+        if (enCours) {
+            chronometre.arreterChrono();
+            enCours = false;
+            System.out.println("Partie terminée. Score final : " + grille.getScore());
+            System.out.println("Temps écoulé : " + (chronometre.tempsEcoule() / 1000) + " secondes");
+        } else {
+            System.out.println("Aucune partie en cours !");
         }
-
-        endGame();
-        scanner.close();
     }
-       private void endGame() {
-        System.out.println("Game Over! Score: " + score);
-    }
-     
-       private void printGrid() {
-        System.out.println("Score: " + score);
-        System.out.println("Time Remaining: " + timeRemaining + " seconds");
 
-        for (int i = 0; i < grille_taille; i++) {
-            for (int j = 0; j < grille_taille; j++) {
-                System.out.print(buttons[i][j] ? "O " : ". ");
+    public void clicBouton(int ligne, int colonne) {
+        if (enCours) {
+            grille.boutonClique();
+            afficherGrille();
+
+            if (grille.getScore() > 0 && grille.getScore() % 5 == 0) {
             }
-            System.out.println();
+
+            if (grille.getScore() > 0 && grille.getScore() % 10 == 0) {
+            }
+
+            if (grille.getScore() > 0 && grille.getScore() % 15 == 0) {
+            }
+
+            if (!grille.estBoutonAllume(ligne, colonne)) {
+                // Gestion d'une erreur de clic
+                System.out.println("Erreur de clic ! Score diminué.");
+            }
+
+            grille.allumerBoutonAleatoire();
+        } else {
+            System.out.println("Aucune partie en cours !");
         }
-        System.out.println();
     }
-    
+
+    public void afficherGrille() {
+        System.out.println(grille);
+    }
 }
