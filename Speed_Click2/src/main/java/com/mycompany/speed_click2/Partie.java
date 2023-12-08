@@ -22,11 +22,10 @@ public class Partie {
 
     public void demarrerPartie() {
         if (!enCours) {
-            grille.eteindreTousLesBoutons();
+            grille.eteindreTousLesBoutons(); // Éteindre tous les boutons au début de la partie
             grille.allumerBoutonAleatoire();
-            chronometre.lancerChrono();
             enCours = true;
-            System.out.println("Partie démarrée. Cliquez sur le bouton allumé !");
+            System.out.println("Cliquez sur le bouton allumé pour démarrer la partie !");
             afficherGrille();
         } else {
             System.out.println("La partie est déjà en cours !");
@@ -46,17 +45,13 @@ public class Partie {
 
     public void clicBouton(int ligne, int colonne) {
         if (enCours) {
+            if (!chronometre.estEnMarche()) {
+                chronometre.lancerChrono();
+                System.out.println("La partie a commencé !");
+            }
+
             grille.boutonClique();
             afficherGrille();
-
-            if (grille.getScore() > 0 && grille.getScore() % 5 == 0) {
-            }
-
-            if (grille.getScore() > 0 && grille.getScore() % 10 == 0) {
-            }
-
-            if (grille.getScore() > 0 && grille.getScore() % 15 == 0) {
-            }
 
             if (!grille.estBoutonAllume(ligne, colonne)) {
                 // Gestion d'une erreur de clic
@@ -73,3 +68,4 @@ public class Partie {
         System.out.println(grille);
     }
 }
+
