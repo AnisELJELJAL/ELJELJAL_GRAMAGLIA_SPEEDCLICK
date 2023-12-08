@@ -8,71 +8,88 @@
  * @author mathi
  */
 import java.util.Random;
+
 public class Grille {
-    private Bouton[][] matriceCellules;
+    private Bouton[][] matriceBoutons;
+    private int nbLignes;
+    private int nbColonnes;
+    private int boutonAllumeLigne;
+    private int boutonAllumeColonne;
+    private int score;
 
     public Grille(int nbLignes, int nbColonnes) {
-        matriceCellules = new Bouton[nbLignes][nbColonnes];
+        this.nbLignes = nbLignes;
+        this.nbColonnes = nbColonnes;
+        matriceBoutons = new Bouton[nbLignes][nbColonnes];
         initialiserGrille();
+        score = 0;
         allumerBoutonAleatoire();
     }
 
-    public void initialiserGrille() {
-        for (int i = 0; i < matriceCellules.length; i++) {
-            for (int j = 0; j < matriceCellules[i].length; j++) {
-                matriceCellules[i][j] = new Bouton(false);
+    private void initialiserGrille() {
+        for (int i = 0; i < nbLignes; i++) {
+            for (int j = 0; j < nbColonnes; j++) {
+                matriceBoutons[i][j] = new Bouton(false);
             }
         }
     }
-    public Bouton[][] getMatriceCellules() {
-        return matriceCellules;
-    }
 
-    public void allumerBoutonAleatoire() {
+    void allumerBoutonAleatoire() {
         Random random = new Random();
-        int ligne = random.nextInt(matriceCellules.length);
-        int colonne = random.nextInt(matriceCellules[0].length);
-
-        matriceCellules[ligne][colonne].boutonAllume();
+        boutonAllumeLigne = random.nextInt(nbLignes);
+        boutonAllumeColonne = random.nextInt(nbColonnes);
+        matriceBoutons[boutonAllumeLigne][boutonAllumeColonne].boutonAllume();
     }
 
-    public boolean cliquerBouton(int ligne, int colonne) {
-        Bouton bouton = matriceCellules[ligne][colonne];
-        if (!bouton.boutonEstEteint()) {
-            eteindreBouton(ligne, colonne);
-            allumerBoutonAleatoire();
-
-            return true; // Clic réussi
-        } else {
-            return false; // Clic incorrect
-        }
+    public boolean estBoutonAllume(int ligne, int colonne) {
+        return matriceBoutons[ligne][colonne].getEtat();
     }
-
-    public void eteindreBouton(int ligne, int colonne) {
-        matriceCellules[ligne][colonne].boutonEteint();
-    }
-
-    public boolean allumerBouton() {
-        for (int i = 0; i < matriceCellules.length; i++) {
-            for (int j = 0; j < matriceCellules[i].length; j++) {
-                if (!matriceCellules[i][j].boutonEstEteint()) {
-                    return true;
-                }
+    public void eteindreTousLesBoutons() {
+        for (int i = 0; i < nbLignes; i++) {
+            for (int j = 0; j < nbColonnes; j++) {
+                matriceBoutons[i][j].boutonEteint();
             }
         }
-        return false;
     }
 
+    public void boutonClique() {
+        if (estBoutonAllume(boutonAllumeLigne, boutonAllumeColonne)) {
+            score++;
+            matriceBoutons[boutonAllumeLigne][boutonAllumeColonne].boutonEteint();
+            allumerBoutonAleatoire();
+        } else {
+            if (score > 0) {
+                score--;
+            }
+        }
+    }
+    public int getScore() {
+        return score;
+    }
+    public int getNbLignes() {
+        return nbLignes;
+    }
+    public int getNbColonnes() {
+        return nbColonnes;
+    }
+    
     @Override
     public String toString() {
-        StringBuilder grilleString = new StringBuilder();
+    StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < matriceCellules.length; i++) {
-            for (int j = 0; j < matriceCellules[i].length; j++) {
-                grilleString.append(matriceCellules[i][j].getEtat() ? "O " : "X "); // O pour allumé, X pour éteint
+    for (int i = 0; i < nbLignes; i++) {
+        for (int j = 0; j < nbColonnes; j++) {
+            if (estBoutonAllume(i, j)) {
+                sb.append("[O] "); // [O] pour représenter un bouton allumé
+            } else {
+                sb.append("[X] "); // [X] pour représenter un bouton éteint
             }
-            grilleString.append("\n");
         }
-        return grilleString.toString();
+        sb.append("\n");
     }
+
+    return sb.toString();
 }
+}
+
+

@@ -12,19 +12,34 @@ public class Chronometre {
     private long duree;
 
     public void lancerChrono() {
-        debut = System.currentTimeMillis();
+        debut = System.nanoTime();
     }
 
     public void arreterChrono() {
-        long fin = System.currentTimeMillis();
+        long fin = System.nanoTime();
         duree = fin - debut;
     }
 
     public long tempsEcoule() {
-        return duree;
+        return duree / 1_000_000; // Convertir de nanosecondes à millisecondes
     }
 
     public long tempsRestant() {
         return Math.max(0, duree - tempsEcoule());
     }
+
+    public boolean estEnMarche() {
+        return debut > 0 && !aTermine();
+    }
+
+    public boolean aTermine() {
+        return tempsRestant() == 0;
+    }
+
+    public void setDuree(int dureeMillis) {
+        this.duree = dureeMillis * 1_000_000; // Convertir de millisecondes à nanosecondes
+    }
 }
+
+
+
