@@ -34,8 +34,8 @@ public class fenetre extends javax.swing.JFrame {
          PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes));
         for (int i=0; i < nbLignes; i++) {
         for (int j=0; j < nbColonnes; j++ ) {
-        JButton bouton_cellule = new BoutonGraphique(); // création d'un bouton
-        PanneauGrille.add(bouton_cellule); // ajout au Jpanel PanneauGrille
+            //JButton bouton_cellule = new BoutonGraphique(); // création d'un bouton
+        //PanneauGrille.add(bouton_cellule); // ajout au Jpanel PanneauGrille
         
    }
      }
