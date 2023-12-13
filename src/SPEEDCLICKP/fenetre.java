@@ -1,5 +1,8 @@
 package SPEEDCLICKP;
 
+import java.awt.GridLayout;
+import javax.swing.JButton;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -14,9 +17,30 @@ public class fenetre extends javax.swing.JFrame {
     /**
      * Creates new form fenetre
      */
+    public void initialiserPartie() {
+ grille.eteindreTousLesBoutons();
+ grille.allumerBoutonAleatoire();
+ }  
+    Grille grille;
+    int nbCoups;
+    int i;
     public fenetre() {
         initComponents();
-    }
+        int nbLignes = 3;
+        int nbColonnes = 3;
+        this.grille = new Grille(nbLignes, nbColonnes);
+            this.initialiserPartie();
+        
+         PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes));
+        for (int i=0; i < nbLignes; i++) {
+        for (int j=0; j < nbColonnes; j++ ) {
+        JButton bouton_cellule = new BoutonGraphique(); // création d'un bouton
+        PanneauGrille.add(bouton_cellule); // ajout au Jpanel PanneauGrille
+        
+   }
+     }
+
+       }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,17 +51,28 @@ public class fenetre extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        PanneauGrille = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        PanneauGrille.setBackground(new java.awt.Color(255, 51, 0));
+        PanneauGrille.setLayout(new java.awt.GridLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(146, 146, 146)
+                .addComponent(PanneauGrille, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(165, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(PanneauGrille, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,5 +114,6 @@ public class fenetre extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanneauGrille;
     // End of variables declaration//GEN-END:variables
 }
