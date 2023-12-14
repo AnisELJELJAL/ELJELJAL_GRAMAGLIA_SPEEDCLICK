@@ -26,22 +26,18 @@ public class fenetre extends javax.swing.JFrame {
     int i;
     public fenetre() {
         initComponents();
-        int nbLignes = 3;
-        int nbColonnes = 3;
+        int nbLignes = 10;
+        int nbColonnes = 10;
         this.grille = new Grille(nbLignes, nbColonnes);
-            this.initialiserPartie();
-        
          PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes));
         for (int i=0; i < nbLignes; i++) {
         for (int j=0; j < nbColonnes; j++ ) {
-            //JButton bouton_cellule = new BoutonGraphique(); // création d'un bouton
-        //PanneauGrille.add(bouton_cellule); // ajout au Jpanel PanneauGrille
-        
+        JButton bouton_cellule = new BoutonGraphique(grille.matriceBoutons[i][j],110,110); // création d'un bouton
+        PanneauGrille.add(bouton_cellule); // ajout au Jpanel PanneauGrille
    }
      }
-
+      this.initialiserPartie();
        }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,7 +51,8 @@ public class fenetre extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        PanneauGrille.setBackground(new java.awt.Color(255, 51, 0));
+        PanneauGrille.setBackground(new java.awt.Color(0, 0, 0));
+        PanneauGrille.setToolTipText("");
         PanneauGrille.setLayout(new java.awt.GridLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

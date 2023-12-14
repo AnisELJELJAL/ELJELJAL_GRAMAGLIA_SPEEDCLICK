@@ -12,7 +12,7 @@ package SPEEDCLICKP;
  import java.util.Random;
 
 public class Grille {
-    private Bouton[][] matriceBoutons;
+    Bouton[][] matriceBoutons;
     private int nbLignes;
     private int nbColonnes;
     private int boutonAllumeLigne;

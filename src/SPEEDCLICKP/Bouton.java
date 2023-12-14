@@ -17,7 +17,7 @@ import java.util.Random;
     private boolean etat;
 
     public Bouton(boolean unEtat) {
-        etat = unEtat;
+        this.etat = unEtat;
     }
 
     public void boutonEteint() {
