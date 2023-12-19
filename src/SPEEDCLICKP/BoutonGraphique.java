@@ -22,18 +22,20 @@ public class BoutonGraphique extends JButton {
  public BoutonGraphique(Bouton celluleLumineuseAssociee, int l,int h) {
  this.largeur = l;
  this.hauteur = h;
- this.BoutonLumineuxAssociee = celluleLumineuseAssociee ;
+ this.BoutonLumineuxAssociee = celluleLumineuseAssociee ; 
  }
- protected void paintComponent(Graphics g) {
+
+ @Override
+protected void paintComponent(Graphics g) {
  int w = this.getWidth();
  int h = this.getHeight();
- if ( BoutonLumineuxAssociee.boutonEstEteint() == true) {
+ if (BoutonLumineuxAssociee.boutonEstEteint()== true) {
  g.setColor(Color.red);
  } else {
  g.setColor(Color.yellow);
  }
- g.fillRect(2, 2, w - 4, h - 4);
+ g.fillOval(2, 2, w - 4, h - 4);
  }
 
- }
+}
  

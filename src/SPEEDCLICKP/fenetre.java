@@ -1,6 +1,8 @@
 package SPEEDCLICKP;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 /*
@@ -26,16 +28,45 @@ public class fenetre extends javax.swing.JFrame {
     int i;
     public fenetre() {
         initComponents();
-        int nbLignes = 10;
-        int nbColonnes = 10;
+        int nbLignes = 3;
+        int nbColonnes = 3;
         this.grille = new Grille(nbLignes, nbColonnes);
          PanneauGrille.setLayout(new GridLayout(nbLignes, nbColonnes));
-        for (int i=0; i < nbLignes; i++) {
-        for (int j=0; j < nbColonnes; j++ ) {
-        JButton bouton_cellule = new BoutonGraphique(grille.matriceBoutons[i][j],110,110); // création d'un bouton
-        PanneauGrille.add(bouton_cellule); // ajout au Jpanel PanneauGrille
-   }
-     }
+        for (int i = 0; i < nbLignes; i++) {
+    for (int j = 0; j < nbColonnes; j++) {
+        final int ligneCourante = i;
+        final int colonneCourante = j;
+        BoutonGraphique bouton_cellule = new BoutonGraphique(grille.matriceBoutons[i][j], 110, 110);
+
+        bouton_cellule.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Récupérer le bouton qui a déclenché l'événement
+                JButton boutonClique = (JButton) e.getSource();
+
+                // Éteindre le bouton actuel
+                grille.eteindreBouton(ligneCourante, colonneCourante);
+
+                // Allumer un autre bouton aléatoire
+                grille.allumerBoutonAleatoire();
+
+                // Mettez à jour l'affichage pour refléter les changements
+                PanneauGrille.removeAll();
+                for (int i = 0; i < nbLignes; i++) {
+                    for (int j = 0; j < nbColonnes; j++) {
+                        BoutonGraphique bouton_cellule = new BoutonGraphique(grille.matriceBoutons[i][j], 110, 110);
+                        // Ajout de l'ActionListener ici comme avant
+                        PanneauGrille.add(bouton_cellule);
+                    }
+                }
+                PanneauGrille.revalidate();
+                PanneauGrille.repaint();
+            }
+        });
+        PanneauGrille.add(bouton_cellule);
+    }
+}
+
       this.initialiserPartie();
        }
     /**
@@ -51,9 +82,9 @@ public class fenetre extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        PanneauGrille.setBackground(new java.awt.Color(0, 0, 0));
+        PanneauGrille.setBackground(new java.awt.Color(102, 102, 102));
         PanneauGrille.setToolTipText("");
-        PanneauGrille.setLayout(new java.awt.GridLayout());
+        PanneauGrille.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

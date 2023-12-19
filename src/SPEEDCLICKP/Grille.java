@@ -24,6 +24,11 @@ public class Grille {
         this.nbColonnes = nbColonnes;
         matriceBoutons = new Bouton[nbLignes][nbColonnes];
         initialiserGrille();
+        for (int i = 0; i < nbLignes; i++) {
+            for (int j = 0; j < nbColonnes; j++) {
+                matriceBoutons[i][j] = new Bouton(false);
+            }
+        }
         score = 0;
         allumerBoutonAleatoire();
     }
@@ -40,9 +45,23 @@ public class Grille {
         Random random = new Random();
         boutonAllumeLigne = random.nextInt(nbLignes);
         boutonAllumeColonne = random.nextInt(nbColonnes);
+       if(matriceBoutons[boutonAllumeLigne][boutonAllumeColonne].getEtat()==true){
+           allumerBoutonAleatoire();
+       }
+       else
+       {
         matriceBoutons[boutonAllumeLigne][boutonAllumeColonne].boutonAllume();
+       }
+    }
+    void allumerBouton(int ligne,int colonne)
+    {
+        matriceBoutons[ligne][colonne].boutonAllume();
     }
 
+    void eteindreBouton(int ligne, int colonne){
+        matriceBoutons[ligne][colonne].boutonEteint();
+        
+    }
     public boolean estBoutonAllume(int ligne, int colonne) {
         return matriceBoutons[ligne][colonne].getEtat();
     }
