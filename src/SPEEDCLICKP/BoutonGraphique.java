@@ -25,17 +25,26 @@ public class BoutonGraphique extends JButton {
  this.BoutonLumineuxAssociee = celluleLumineuseAssociee ; 
  }
 
- @Override
-protected void paintComponent(Graphics g) {
- int w = this.getWidth();
- int h = this.getHeight();
- if (BoutonLumineuxAssociee.boutonEstEteint()== true) {
- g.setColor(Color.red);
- } else {
- g.setColor(Color.yellow);
- }
- g.fillOval(2, 2, w - 4, h - 4);
- }
+    /**
+     * creation de la forme des boutons graphiques 
+     * @param g
+     */
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
+        int w = getWidth();
+        int h = getHeight();
+
+        // Définir la couleur du cercle en fonction de l'état du bouton (éteint ou allumé)
+        if (BoutonLumineuxAssociee.boutonEstEteint()) {
+            g.setColor(Color.gray);
+        } else {
+            g.setColor(Color.YELLOW);
+        }
+
+        // Dessiner un cercle
+        g.fillOval(2, 2, w - 4, h - 4);
+    }
 }
  
